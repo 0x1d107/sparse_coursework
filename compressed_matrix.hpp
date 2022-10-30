@@ -8,6 +8,7 @@ class compressed_matrix{
         std::vector<double> value;
         void set_init(int i,int j, double v);
 		void set_size(int n);
+        double mul_sub(const compressed_matrix& other,int i,int j,int k);
     public:
         compressed_matrix(int n);
 		void read( const std::string & filename);
@@ -15,6 +16,7 @@ class compressed_matrix{
         int row_num();
         int elem_num();
         void print_matrix();
+        double get(int i,int j);
 		void LU_decomposition(compressed_matrix &L,compressed_matrix &U);
 		void solve_L(const std::vector<double> &b, std::vector<double>& y);
 		void solve_U(const std::vector<double> &y, std::vector<double> &x);
