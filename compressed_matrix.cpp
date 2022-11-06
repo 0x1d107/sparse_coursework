@@ -43,10 +43,12 @@ void compressed_matrix::print_matrix(){
 }
 void compressed_matrix::set_init(int i, int j, double v){
     rows[i] = std::min(rows[i],(int)value.size());
+    /*
     if(cols.size()&&j == cols.back()){
         value.back() = v;
+        std::cout << "replace!"<<std::endl;
         return;
-    }
+    }*/
 	value.push_back(v);
 	cols.push_back(j);
 }
@@ -92,7 +94,7 @@ double compressed_matrix::mul_sub(const compressed_matrix& other,int i,int j,int
     for(int t=0;t<k;t++){
         auto a = get(i,t);
         auto b = other.get(t,j);
-        std::cout<<"("<<a<<"*"<<b<<":"<<t<<") +" ;
+        std::cout<<"("<<a<<"*"<<b<<":"<<t<<") " ;
         sum+=a*b;
     };
     std::cout<<std::endl;
@@ -110,8 +112,8 @@ void compressed_matrix::LU_decomposition(compressed_matrix &L, compressed_matrix
                 std::cout<< "U["<<i<<","<<j<<"]::"<<t<<std::endl;
                 U.set_init(i,j,t);
                 //U.print_matrix();
-                //if(i==j)
-                //    L.set_init(i,j,1);
+                if(i==j)
+                    L.set_init(i,j,1);
                 
             }else{
                 std::cout<<"M[i,j] = "<<get(i,j)<<std::endl;
