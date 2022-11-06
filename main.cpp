@@ -7,15 +7,21 @@ int main(){
 	m.read("mat.txt");
     std::cout<<"M = "<<std::endl;
     m.print_matrix();
-    
-    compressed_matrix L(5),U(5);
-    // FIXME Incorrect result!!
-    m.LU_decomposition(L,U);
-    std::cout<<"L = "<<std::endl;
+    std::cout<<std::endl;
+    compressed_matrix L(5);
+    compressed_matrix U(5);
+    for(int i=0;i<5;i++){
+        for(int j=0;j<5;j++){
+            std::cout<<m.get(i,j)<<' ';
+        }
+        std::cout<<std::endl;
+    }
+    m.LU_decomposition(L, U);
+    std::cout<<"L:\n";
     L.print_matrix();
-
-    std::cout<<"U = "<<std::endl;
+    std::cout<<std::endl;
+    std::cout<<"U:\n";
     U.print_matrix();
-
+    std::cout<<std::endl;
 
 }
