@@ -22,3 +22,5 @@ for i in range(5):
 print("L:\n",L)
 print("U:\n",U)
 print("(L+I)*U:\n",(L+numpy.eye(5))@U)
+print(mat:=numpy.linalg.solve(L+numpy.eye(5),numpy.array([1,2,3,4,5]).T ))
+print(numpy.linalg.solve(U,mat.T))

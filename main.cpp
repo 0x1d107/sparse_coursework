@@ -23,5 +23,23 @@ int main(){
     std::cout<<"U:\n";
     U.print_matrix();
     std::cout<<std::endl;
+    std::vector<double> x,y,b(m.row_num());
+    for(int i=0;i<m.row_num();i++)
+        std::cin>>b[i];
+
+    L.solve_L(b,y);
+    U.solve_U(y,x);
+
+    for(int i=0;i<m.row_num();i++){
+        std::cout<< x[i]<<std::endl;
+    }
+    std::cout << "BiCStab"<<std::endl;
+    x = std::vector<double>{1,1,1,1,1};
+    m.BiCGStab_solve(b,x);
+    for(int i=0;i<m.row_num();i++){
+        std::cout<< x[i]<<std::endl;
+    }
+
+
 
 }

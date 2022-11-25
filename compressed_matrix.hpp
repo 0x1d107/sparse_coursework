@@ -13,11 +13,15 @@ class compressed_matrix{
         compressed_matrix(int n);
 		void read( const std::string & filename);
         virtual ~compressed_matrix();
-        int row_num();
-        int elem_num();
+        int row_num() const;
+        int elem_num() const;
         void print_matrix();
         virtual double get(int i,int j) const ;
 		void LU_decomposition(compressed_matrix &L,compressed_matrix &U);
 		void solve_L(const std::vector<double> &b, std::vector<double>& y);
 		void solve_U(const std::vector<double> &y, std::vector<double> &x);
+        std::vector<double> operator*(std::vector<double> vec)const ;
+        
+        std::vector<double> T_prod(const std::vector<double>& vec)const ;
+		void BiCGStab_solve(const std::vector<double> &b, std::vector<double>& x);
 };
