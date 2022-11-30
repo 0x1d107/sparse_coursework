@@ -124,6 +124,41 @@ void compressed_matrix::LU_decomposition(compressed_matrix &L, compressed_matrix
     
     
 }
+void compressed_matrix::ILU_decomposition(compressed_matrix &L, compressed_matrix &U){
+    L.set_size(row_num());
+    U.set_size(row_num());
+    for(int i=0;i<row_num();i++){
+        bool diag = false;
+        for(int r=rows[i];r<std::min(rows[i+1],(int)cols.size());r++){
+            int j = cols[r];
+            double v= value[r];
+            if(i<=j){
+                //if(i==j)
+                //    L.set_init(i,j,1);
+                double t = (v-L.mul_sub(U,i,j,i));
+                //std::cout<< "U["<<i<<","<<j<<"]::"<<t<<std::endl;
+                U.set_init(i,j,t);
+                //U.print_matrix();
+                if(!diag){
+                    L.set_init(i,i,1);
+                    diag = true;
+                }
+                
+            }else{
+                
+                //std::cout<<"M[i,j] = "<<get(i,j)<<std::endl;
+                double t = (v-L.mul_sub(U,i,j,j))/U.get(j,j);
+                //std::cout<< "L["<<i<<","<<j<<"]::"<<t<<"| U[j,j] ="<<U.get(j,j)<<std::endl;
+                L.set_init(i,j,t);
+                //L.print_matrix();
+            }
+        }
+        if(!diag){
+            L.set_init(i,i,1);
+            diag = true;
+        }
+    }
+}
 void compressed_matrix::solve_L(const std::vector<double> &b, std::vector<double> &y){
     y = std::vector<double>(b);
     for(int i=0;i<row_num();i++){
@@ -227,7 +262,7 @@ double compressed_matrix::BiCGStab_solve(const std::vector<double> &b, std::vect
         r0 = r1;
         double rn = norm(r0);
         //std::cout<<"Err: "<<rn<<std::endl;
-        if(std::abs(rn)<1e-5){
+        if(rn<1e-5){
             return rn;
         }
         /*
@@ -260,7 +295,9 @@ void compressed_matrix::generate(int seed,double chance){
         for(int j=0;j<row_num();j++){
             if(i==j)
                 set_init(i,j,sum*2);
-            else{
+            else if(j<i){
+                set_init(i,j,get(j,i));
+            }else{
                 if(sum>0&&fabs(rnd())<chance){
                     double val = sum*rnd();
                     sum-=fabs(val);

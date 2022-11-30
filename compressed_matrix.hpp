@@ -19,6 +19,7 @@ class compressed_matrix{
         void print_matrix();
         double get(int i,int j) const ;
 		void LU_decomposition(compressed_matrix &L,compressed_matrix &U);
+        void ILU_decomposition(compressed_matrix &L,compressed_matrix &U);
 		void solve_L(const std::vector<double> &b, std::vector<double>& y);
 		void solve_U(const std::vector<double> &y, std::vector<double> &x);
         std::vector<double> operator*(const std::vector<double>& vec)const ;
