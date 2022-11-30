@@ -12,16 +12,17 @@ class compressed_matrix{
     public:
         compressed_matrix(int n);
 		void read( const std::string & filename);
+        void generate(int seed,double chance=0.5);
         virtual ~compressed_matrix();
         int row_num() const;
         int elem_num() const;
         void print_matrix();
-        virtual double get(int i,int j) const ;
+        double get(int i,int j) const ;
 		void LU_decomposition(compressed_matrix &L,compressed_matrix &U);
 		void solve_L(const std::vector<double> &b, std::vector<double>& y);
 		void solve_U(const std::vector<double> &y, std::vector<double> &x);
-        std::vector<double> operator*(std::vector<double> vec)const ;
+        std::vector<double> operator*(const std::vector<double>& vec)const ;
         
         std::vector<double> T_prod(const std::vector<double>& vec)const ;
-		void BiCGStab_solve(const std::vector<double> &b, std::vector<double>& x);
+		double BiCGStab_solve(const std::vector<double> &b, std::vector<double>& x,int n = 1000);
 };
