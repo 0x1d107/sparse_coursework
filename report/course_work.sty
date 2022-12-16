@@ -3,7 +3,7 @@
 \RequirePackage{titlesec} %работа с рубрикацией
 \RequirePackage{tocloft} %настройки оглавления
 \RequirePackage[T2A]{fontenc}
-\RequirePackage[utf8x]{inputenc}
+\RequirePackage[utf8]{inputenc}
 \RequirePackage[russian]{babel}
 \RequirePackage{hyperref} %кликабельное оглавление
 \RequirePackage[left=3.7cm,right=2cm,top=2cm,bottom=2cm]{geometry}
@@ -32,6 +32,9 @@
 \makeatletter
 \renewcommand{\@biblabel}[1]{#1.} %хотим, чтобы в списке литературы номера источников писались в формате "No. <...>", а не "[No] <...>"
 \makeatother
+
+\usepackage[style=gost-numeric,language=auto]{biblatex}
+
 
 % ГРАФИКИ
 \usepackage{tikz}
