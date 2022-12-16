@@ -1,0 +1,12 @@
+build/
+report/*
+!report/*.tex
+!report/*.bib
+!report/*.sty
+!report/makefile
+!report/*.pdf
+!report/graphs
+report/graphs/*
+!report/graphs/*.data
+!report/graphs/*.gp
+!report/title-pages.pdf
