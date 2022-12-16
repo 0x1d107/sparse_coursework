@@ -33,10 +33,17 @@
 \renewcommand{\@biblabel}[1]{#1.} %хотим, чтобы в списке литературы номера источников писались в формате "No. <...>", а не "[No] <...>"
 \makeatother
 
+% ГРАФИКИ
+\usepackage{tikz}
+
+% Титульник в pdf
+\usepackage{pdfpages}
+
 % ОФОРМЛЕНИЕ ПСЕВДОКОДА
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{algorithmicx}
+% Руссификация algorithmicx
 \algrenewcommand\algorithmicwhile{\textbf{До тех пока}}
 \algrenewcommand\algorithmicdo{\textbf{выполнять}}
 \algrenewcommand\algorithmicrepeat{\textbf{Повторять}}
