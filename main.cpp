@@ -10,7 +10,7 @@ int main(){
     compressed_matrix L(5);
     compressed_matrix U(5);
     //for(int i=0;i<100;i++){
-        int N = 800;
+        int N = 300;
         
 
         std::vector<double> x(N,0),y(N),b(N);
@@ -49,7 +49,7 @@ int main(){
         std::cout<<"LU time:"<<(lu_end - lu_start*1.0)/CLOCKS_PER_SEC<<std::endl;
         x = std::vector<double>(N,0);
         auto bcg_start = clock();
-        double r = m.BiCGStab_solve(b,x,1000000);
+        double r = m.BiCGStab_solve(b,x,10000);
         auto bcg_end = clock();
         std::cout<<"BiCGStab time:"<<(bcg_end - bcg_start*1.0)/CLOCKS_PER_SEC<<std::endl;
         std::cout<<"Residue norm:"<<r<<std::endl;
