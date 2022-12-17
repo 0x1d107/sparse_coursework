@@ -10,7 +10,7 @@ int main(){
     compressed_matrix L(5);
     compressed_matrix U(5);
     //for(int i=0;i<100;i++){
-        int N = 300;
+        int N = 1000;
         
 
         std::vector<double> x(N,0),y(N),b(N);

@@ -26,4 +26,5 @@ class compressed_matrix{
         
         std::vector<double> T_prod(const std::vector<double>& vec)const ;
 		double BiCGStab_solve(const std::vector<double> &b, std::vector<double>& x,int n = 1000);
+	bool check(std::vector<double> b, std::vector<double> x);
 };
