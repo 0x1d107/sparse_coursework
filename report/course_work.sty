@@ -46,6 +46,16 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{algorithmicx}
+
+% Листинг программы
+\usepackage{listings}
+\lstset{
+    basicstyle={\ttfamily\scriptsize},
+    title={\protect\filename@parse{\lstname}\protect\filename@base\text{.}\protect\filename@ext},
+    breaklines=true,
+    breakatwhitespace=true,
+}
+
 % Руссификация algorithmicx
 \algrenewcommand\algorithmicwhile{\textbf{До тех пока}}
 \algrenewcommand\algorithmicdo{\textbf{выполнять}}

@@ -47,12 +47,20 @@ int main(){
         U.solve_U(y,x);
         auto lu_end = clock();
         std::cout<<"LU time:"<<(lu_end - lu_start*1.0)/CLOCKS_PER_SEC<<std::endl;
+        if(m.check(b,x))
+            std::cout<<"[OK]"<<std::endl;
+        else
+            std::cout<<"[FAIL]"<<std::endl;
         x = std::vector<double>(N,0);
         auto bcg_start = clock();
         double r = m.BiCGStab_solve(b,x,10000);
         auto bcg_end = clock();
         std::cout<<"BiCGStab time:"<<(bcg_end - bcg_start*1.0)/CLOCKS_PER_SEC<<std::endl;
         std::cout<<"Residue norm:"<<r<<std::endl;
+        if(m.check(b,x))
+            std::cout<<"[OK]"<<std::endl;
+        else
+            std::cout<<"[FAIL]"<<std::endl;
     //}
 
 }

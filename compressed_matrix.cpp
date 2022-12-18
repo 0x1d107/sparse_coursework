@@ -309,6 +309,14 @@ void compressed_matrix::generate(int seed,double chance){
     
 }
 
+bool compressed_matrix::check(std::vector<double> b, std::vector<double> x){
+    std::vector<double> r = (*this)*x - b;
+    for(int i=0;i<r.size();i++){
+        if(std::abs(r[i])>=1e-5)
+            return false;
+    }
+    return true;
+}
 
 
 compressed_matrix::~compressed_matrix(){
