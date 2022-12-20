@@ -63,7 +63,8 @@ void compressed_matrix::read(const std::string &filename){
 double compressed_matrix::get(int i,int j) const{
     if(rows[i]>=cols.size())
         return 0.0;
-    auto it = std::lower_bound(cols.begin()+rows[i],cols.begin()+std::min(rows[i+1],(int)cols.size()),j);
+    auto it = std::lower_bound(cols.begin()+rows[i],
+            cols.begin()+std::min(rows[i+1],(int)cols.size()),j);
     if(it!=cols.end()&&*it == j){
         return value[it - cols.begin()];
     }
@@ -71,30 +72,11 @@ double compressed_matrix::get(int i,int j) const{
 }
 double compressed_matrix::mul_sub(const compressed_matrix& other,int i,int j,int k){
     double sum = 0.0;
-    /*
-    for(int ri=rows[i];ri<rows[i+1];ri++){
-        std::cout<<"ri = "<<ri<<std::endl;
-        if(ri>=cols.size())
-            continue;
-        int rk = cols[ri];
-        std::cout<<"rk = "<<rk<<std::endl;
-        if(rk>=k)
-            break;
-        double rv = value[rk];
-        double ov = other.get(rk,j);
-        sum+=rv*ov;
-        std::cout<<"("<<ri<<","<<rk<<") "<<rv<<" * "<<ov<<std::endl;
-
-
-    }
-    */
     for(int t=0;t<k;t++){
         auto a = get(i,t);
         auto b = other.get(t,j);
-        //std::cout<<"("<<a<<"*"<<b<<":"<<t<<") " ;
         sum+=a*b;
     };
-    //std::cout<<std::endl;
     return sum;
 }
 void compressed_matrix::LU_decomposition(compressed_matrix &L, compressed_matrix &U){
@@ -103,21 +85,14 @@ void compressed_matrix::LU_decomposition(compressed_matrix &L, compressed_matrix
     for(int i=0;i<row_num();i++){
         for(int j=0;j<row_num();j++){
             if(i<=j){
-                //if(i==j)
-                //    L.set_init(i,j,1);
                 double t = (get(i,j)-L.mul_sub(U,i,j,i));
-                //std::cout<< "U["<<i<<","<<j<<"]::"<<t<<std::endl;
                 U.set_init(i,j,t);
-                //U.print_matrix();
                 if(i==j)
                     L.set_init(i,j,1);
                 
             }else{
-                //std::cout<<"M[i,j] = "<<get(i,j)<<std::endl;
                 double t = (get(i,j)-L.mul_sub(U,i,j,j))/U.get(j,j);
-                //std::cout<< "L["<<i<<","<<j<<"]::"<<t<<"| U[j,j] ="<<U.get(j,j)<<std::endl;
                 L.set_init(i,j,t);
-                //L.print_matrix();
             }
         }
     }
@@ -133,24 +108,16 @@ void compressed_matrix::ILU_decomposition(compressed_matrix &L, compressed_matri
             int j = cols[r];
             double v= value[r];
             if(i<=j){
-                //if(i==j)
-                //    L.set_init(i,j,1);
                 double t = (v-L.mul_sub(U,i,j,i));
-                //std::cout<< "U["<<i<<","<<j<<"]::"<<t<<std::endl;
                 U.set_init(i,j,t);
-                //U.print_matrix();
                 if(!diag){
                     L.set_init(i,i,1);
                     diag = true;
                 }
                 
             }else{
-                
-                //std::cout<<"M[i,j] = "<<get(i,j)<<std::endl;
                 double t = (v-L.mul_sub(U,i,j,j))/U.get(j,j);
-                //std::cout<< "L["<<i<<","<<j<<"]::"<<t<<"| U[j,j] ="<<U.get(j,j)<<std::endl;
                 L.set_init(i,j,t);
-                //L.print_matrix();
             }
         }
         if(!diag){
@@ -238,10 +205,8 @@ std::vector<double> compressed_matrix::T_prod(const std::vector<double> &vec)con
     for(int i=0;i<vec.size();i++){
         for(int k =0;k<row_num();k++){
             res[i]+=get(k,i)*vec[k];
-            
+            }
         }
-        
-    }
     return res;
 }
 
@@ -261,27 +226,9 @@ double compressed_matrix::BiCGStab_solve(const std::vector<double> &b, std::vect
         p0 = r1 + beta * (p0 - omega*(A*p0));
         r0 = r1;
         double rn = norm(r0);
-        //std::cout<<"Err: "<<rn<<std::endl;
         if(rn<1e-5){
             return rn;
         }
-        /*
-        double alpha = (r0*r0_)/((A*p0) * p0_);
-        x = x+ alpha*p0;
-        auto r02 = r0 - alpha * (A * p0);
-        auto r0_2 = r0_ - alpha * A.T_prod(p0_);
-        double beta = (r02 *r0_2)/(r0*r0_); 
-        double rn = norm(r02);
-        std::cout<<"Err: "<<rn<<std::endl;
-        if(std::abs(rn)<1e-7){
-            return;
-        }
-        if(std::abs(beta) < 1e-9)
-            return;
-        p0  = r02  + beta * p0;
-        p0_ = r0_2 + beta * p0_;
-        r0 = r02;
-        r0_ = r0_2;*/
     }
     return norm(r0);
 }
@@ -320,6 +267,5 @@ bool compressed_matrix::check(std::vector<double> b, std::vector<double> x){
 
 
 compressed_matrix::~compressed_matrix(){
-
 }
 
